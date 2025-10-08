@@ -20,3 +20,57 @@
         shell: /sbin/nologin
         home: /app
         comment: roboshop system user
+
+    - name: remove app
+      ansible.builtin.file:
+        path: /app
+        state: absent
+
+    - name: create app
+      ansible.builtin.file:
+        path: /app
+        state: directory
+
+    - name: downloading the catalogue file
+      ansible.builtin.get_url:
+        url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+        dest: /tmp/catalogue.zip
+    - name: unarchieve the file
+      ansible.builtin.unarchive:
+        src: /tmp/catalogue.zip
+        dest: /app
+        remote_src: yes
+
+    - name: install dependencies
+      community.general.npm:
+        path: /app
+
+    - name: copy the service
+      ansible.builtin.copy:
+        src: catalogue.service
+        dest: /etc/systemd/system/catalogue.service
+
+    - name: Restart catalogue service
+      ansible.builtin.systemd_service:
+        state: restarted
+        daemon_reload: true
+        name: catalogue
+        enabled: true
+
+    - name: copy mongo repo
+      ansible.builtin.copy:
+        src: mongo.repo
+        dest: /etc/yum.repos.d/mongo.repo
+
+    - name: install mongo repo
+      ansible.builtin.package:
+        name: mongodb-mongosh
+        state: present
+
+    - name: connnect to mongodb catalogue
+      ansible.builtin.command: mongosh mongodb.daws86s.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
+      register: catalogue_output
+
+    - name: load the data
+      ansible.builtin.shell: mongosh --host mongodb.idiap.shop </app/db/master-data.js
+      when: catalogue_output.stdout | int < 0
