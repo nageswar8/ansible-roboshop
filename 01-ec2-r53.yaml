@@ -4,6 +4,8 @@
   vars:
     img_id: ami-09c813fb71547fc4f
     sg_id: sg-0fecc4fefc0ae3b31
+    zone_id: Z09590552TMQIL7M10P1I
+    domain: idiap.shop
     instances:
       - mongodb
   tasks:
@@ -21,3 +23,11 @@
     - name: print the instance data
       ansible.builtin.debug:
         msg: "{{ instance_output }}"
+
+    - name: create route 53 records
+      amazon.aws.route53:
+        state: present
+        zone: "{{ zone_id }}"
+        record: "{{ private_ip_address.item }}.{{ domain }}"
+        ttl: 1
+        value: "{{ instance_output.private_ip_address }}"
