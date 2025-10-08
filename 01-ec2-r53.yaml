@@ -6,8 +6,8 @@
     sg_id: sg-0fecc4fefc0ae3b31
     zone_id: Z09590552TMQIL7M10P1I
     domain: idiap.shop
-    instances:
-      - mongodb
+    # instances:
+    #   - mongodb
   tasks:
     - name: create ec2 instance
       amazon.aws.ec2_instance:
