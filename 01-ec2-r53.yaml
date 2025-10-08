@@ -1,4 +1,4 @@
-- name: create ec2 and route 53 records
+- name: "create ec2 and route 53 records"
   hosts: local
   connection: local
   vars:
