@@ -32,4 +32,5 @@
         ttl: 1
         type: A
         value: "{{ item.instances[0].private_ip_address }}"
+        overwrite: true
       loop: "{{ instance_output.results }}"
