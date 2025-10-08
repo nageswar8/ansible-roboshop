@@ -28,6 +28,8 @@
       amazon.aws.route53:
         state: present
         zone: "{{ zone_id }}"
-        record: "{{ private_ip_address.item }}.{{ domain }}"
+        record: "{{ item.item }}.{{ domain }}"
         ttl: 1
-        value: "{{ instance_output.private_ip_address }}"
+        type: A
+        value: "{{ item.private_ip_address }}"
+      loop: "{{ instance_output.results }}"
