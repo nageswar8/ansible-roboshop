@@ -31,5 +31,5 @@
         record: "{{ item.item }}.{{ domain }}"
         ttl: 1
         type: A
-        value: "{{ item.private_ip_address }}"
+        value: "{{ item.instances[0].private_ip_address }}"
       loop: "{{ instance_output.results }}"
