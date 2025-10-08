@@ -2,10 +2,16 @@
   hosts: redis
   become: yes
   tasks:
+    - name: disabling current redis version
+      ansible.builtin.command: dnf module disable redis -y
+
+    - name: enabled redis 7 version
+      ansible.builtin.command: dnf module enable redis:7 -y
+
     - name: install redis
       ansible.builtin.dnf:
         state: present
-        name: redis=7
+        name: redis
 
     - name: making open to remote connection
       ansible.builtin.replace:
