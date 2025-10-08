@@ -6,10 +6,17 @@
       ansible.builtin.copy:
         src: rabbitmq.repo
         dest: /etc/yum.repos.d/rabbitmq.repo
+
     - name: install rabbit server
       ansible.builtin.dnf:
         name: rabbitmq-server
         state: present
+    - name: start the rabbit server
+      ansible.builtin.service:
+        name: rabbitmq-server
+        state: restarted
+        enabled: yes
+
     - name: add roboshop user for rabbit
       community.rabbitmq.rabbitmq_user:
         user: roboshop

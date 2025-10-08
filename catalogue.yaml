@@ -1,0 +1,22 @@
+- name: catalogue server setup
+  hosts: catalogue
+  become: yes
+  tasks:
+    - name: disable node js
+      ansible.builtin.command: dnf module disable nodejs -y
+
+    - name: enable node js
+      ansible.builtin.command: dnf module enable nodejs:20 -y
+
+    - name: install nodejs
+      ansible.builtin.dnf:
+        name: nodejs
+        state: present
+
+    - name: add roboshop user
+      ansible.builtin.user:
+        name: roboshop
+        system: true
+        shell: /sbin/nologin
+        home: /app
+        comment: roboshop system user
