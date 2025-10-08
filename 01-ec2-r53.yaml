@@ -4,8 +4,8 @@
   vars:
     img_id: ami-09c813fb71547fc4f
     sg_id: sg-0fecc4fefc0ae3b31
-  instances:
-    - mongodb
+    instances:
+      - mongodb
   tasks:
     - name: create ec2 instance
       amazon.aws.ec2_instance:
