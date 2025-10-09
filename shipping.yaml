@@ -55,14 +55,17 @@
 
     - name: Install pymysql
       pip:
-        name: pymysql
+        name: "{{ item }}"
         executable: pip3
+      loop:
+        - pymysql
 
     - name: load the db
       community.mysql.mysql_db:
+        login_host: mysql.idiap.shop
         login_user: root
         login_password: RoboShop@1
-        state: dump
+        state: all
         name: db
         target: "{{ item }}"
       loop:
