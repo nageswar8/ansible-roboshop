@@ -41,7 +41,7 @@
 
     - name: Install specified python requirements
       ansible.builtin.pip:
-        requirements: /my_app/requirements.txt
+        requirements: /app/requirements.txt
 
     - name: copy the service
       ansible.builtin.copy:
