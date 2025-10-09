@@ -4,8 +4,11 @@
   tasks:
     - name: install maven
       ansible.builtin.dnf:
-        name: maven
+        name: "{{ item }}"
         state: present
+      loop:
+        - maven
+        - mysql
 
     - name: add roboshop user
       ansible.builtin.user:
@@ -49,11 +52,6 @@
       ansible.builtin.copy:
         src: shipping.service
         dest: /etc/systemd/system/shipping.service
-
-    - name: install mysql
-      ansible.builtin.dnf:
-        state: present
-        name: mysql
 
     - name: load the db
       community.mysql.mysql_db:
