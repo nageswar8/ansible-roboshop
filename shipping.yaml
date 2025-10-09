@@ -65,7 +65,7 @@
         login_host: mysql.idiap.shop
         login_user: root
         login_password: RoboShop@1
-        state: all
+        state: import
         name: db
         target: "{{ item }}"
       loop:
