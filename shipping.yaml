@@ -53,6 +53,11 @@
         src: shipping.service
         dest: /etc/systemd/system/shipping.service
 
+    - name: Install pymysql
+      pip:
+        name: pymysql
+        executable: pip3
+
     - name: load the db
       community.mysql.mysql_db:
         login_user: root
