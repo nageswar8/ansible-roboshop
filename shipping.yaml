@@ -39,7 +39,7 @@
         remote_src: yes
 
     - name: dependencies downloading
-      ansible.builtin.command: maven clean package
+      ansible.builtin.command: mvn clean package
       args:
         chdir: /app
 
