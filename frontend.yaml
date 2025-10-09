@@ -2,15 +2,14 @@
   hosts: frontend
   become: yes
   tasks:
-    - name: disable default nginx
-      ansible.builtin.command: dnf module disable nginx -y
-
-    - name: enable nginx 1.24
-      ansible.builtin.command: dnf module enable nginx:1.24 -y
-
-    - name: install nginx
+    - name: Disable default nginx module
       ansible.builtin.dnf:
-        name: nginx
+        name: "@nginx"
+        state: disabled
+
+    - name: Enable nginx 1.24 module
+      ansible.builtin.dnf:
+        name: "@nginx:1.24"
         state: present
     - name: remove files
       ansible.builtin.file:
@@ -40,6 +39,6 @@
 
     - name: start the ngninx server
       ansible.builtin.service:
-        name: ngninx
+        name: nginx
         state: restarted
         enabled: yes
