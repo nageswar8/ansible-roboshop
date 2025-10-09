@@ -44,5 +44,5 @@
         type: A
         value: "{{ item.instances[0].public_ip_address }}"
         overwrite: true
-      when: "{{ item.item }} == 'frontend'"
+      when: item.item == "frontend"
       loop: "{{ instance_output.results }}"
