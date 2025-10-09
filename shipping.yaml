@@ -59,6 +59,7 @@
         executable: pip3
       loop:
         - pymysql
+        - cryptography
 
     - name: load the db
       community.mysql.mysql_db:
